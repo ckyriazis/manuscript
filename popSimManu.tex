@@ -1,6 +1,6 @@
 \documentclass[12pt,halfline,a4paper]{ouparticle}
 \usepackage{amsmath,amssymb}
-\usepackage{natbib}
+\usepackage[round]{natbib}
 \usepackage{graphicx,rotating}
 \usepackage{dsfont}
 \usepackage{xspace}
@@ -35,7 +35,7 @@
 
 \begin{document}
 
-\title{\stdpopsim: a community toolkit for population genetic simulation}
+\title{A community-maintained standard library of population genetic simulations}
 
 \author{%
 \name{The PopSim Consortium}
@@ -74,9 +74,9 @@ the degree of sophistication of the questions, models, data, and computational a
 used have all increased over the past decade. Currently there exist myriad computational methods
 that can infer the histories of populations, the distribution of fitness effects,
 recombination rates, the extent of positive selection in genome sequence data
-(\cite{li2011inference,schiffels2014inferring,terhorst2017robust,eyre2009estimating,kim2017inference,
+\citep{li2011inference,schiffels2014inferring,terhorst2017robust,eyre2009estimating,kim2017inference,
 chan2012genome,lin2013fast,Adrion662247,alachiotis2012omegaplus,degiorgio2016sweepfinder2,
-kern2018diplos,sugden2018localization}).
+kern2018diplos,sugden2018localization}.
 While en masse these methods have increased our understanding of the
 impacts of genetic and evolutionary processes, very little has been done to systematically
 benchmark the quality of inferences gleaned from computational population genetics.
@@ -98,8 +98,9 @@ have been several clear examples of different methods yielding fundamentally
 different conclusions. For example, \MSMC methods applied to human genomes have
 % JK is this right? > 100 years doesn't sound very ancient to me.
 suggested large ancient ($>100$ years ago) ancestral population sizes and
-bottlenecks that have not been detected by SFS-based methods (see
-\citet{beichman2017comparison}). These distinct models differ in how they fit various summaries of the
+bottlenecks that have not been detected by SFS-based methods
+\citep[see][]{beichman2017comparison}.
+These distinct models differ in how they fit various summaries of the
 genetic variation data, suggesting that modeling choices can greatly affect the
 performance of the inference. Furthermore, it is reasonable
 to assume generally that specific methods will perform better than others under certain scenarios.
@@ -168,7 +169,7 @@ example of how it can be used to benchmark demographic inference methods.
 
 \begin{figure}[t]
 \begin{center}
-\includegraphics[width=0.5\linewidth]{display_items/Figure1.png}
+\includegraphics[width=0.5\linewidth]{display_items/Figure1.pdf}
 \caption{\textbf{Structure of \stdpopsim}. \textbf{A.} The
 hierarchical organization of the PopSim catalog contains all information
 within individual species. Information within the species level is shown here
@@ -199,9 +200,9 @@ lengths, average mutation rates and so on. We also provide access to detailed
 empirical information such as recombination maps, which model empirically
 observed heterogeneity along chromosomes. As such maps are often large and hard
 to find, we provide a mechanism to automatically download (and cache locally) a
-set of known maps (Fig. \ref{fig:cartoon}B). For example, in humans we support the HapMapII
-\cite{international2007second}) and
-deCODE (\cite{kong2010fine}) genetic maps. The second key element of a species description
+set of known maps (Fig. \ref{fig:cartoon}B). For example, in humans we support the
+HapMapII~\citep{international2007second} and
+deCODE~\citep{kong2010fine} genetic maps. The second key element of a species description
 within \stdpopsim is a set of carefully curated population genetic model
 descriptions from the literature, which are the basis for accurate simulations
 of specific historical scenarios.
@@ -211,14 +212,14 @@ library, it is then straightforward to run accurate, standardized simulations
 across a range of organisms. \stdpopsim has a Python API and a user-friendly
 command line interface (Fig. \ref{fig:cartoon}C), allowing users with minimal experience direct access to
 state-of-the-art simulations. Simulations are output in the “tree sequence”
-format (\cite{kelleher2016efficient,kelleher2018efficient,kelleher2019inferring}), which
+format \citep{kelleher2016efficient,kelleher2018efficient,kelleher2019inferring}, which
 contains complete genealogical information about the simulated samples, is
 extremely compact, and can be processed very efficiently using the tskit library
-(\cite{kelleher2016efficient,kelleher2018efficient}; Fig. \ref{fig:cartoon}D). Currently,
-\stdpopsim uses the  \texttt{msprime} coalescent simulator (\cite{kelleher2016efficient})
+\citep{kelleher2016efficient,kelleher2018efficient}. Currently,
+\stdpopsim uses the  \texttt{msprime} coalescent simulator \citep{kelleher2016efficient}
 as the simulation engine. We plan to include other simulation
 engines to support scenarios that cannot be modelled under the coalescent framework,
-and have already implemented \texttt{SLiM} (\cite{haller2019slim}) as
+and have already implemented \texttt{SLiM} \citep{haller2019slim} as
 an alternative back-end.
 
 The \stdpopsim command line interface, by default, outputs citation information
@@ -230,10 +231,10 @@ of simulation models to contribute to our ongoing community-driven development p
 \subsection*{\texttt{stdpopsim} Catalog}
 The current contents of the \texttt{stdpopsim} catalog are shown in Table X. At the time of
 writing the PopSim Consortium has implemented previously published demographic models for
-humans, \emph{Drosophila}, and \emph{Arabidopsis}. These include both
-simpler, single population histories (e.g., in \emph{D. melanogaster} \cite{sheehan2016deep}),
-and much more complex models which include population splitting, migration, and archaic
-admixture (e.g., in humans \cite{ragsdale2019models}).
+humans, \emph{Drosophila}, and \emph{Arabidopsis}. These range from
+simple, single population histories \cite[e.g.,][]{sheehan2016deep},
+to complex models which include population splitting, migration, and archaic
+admixture \cite[e.g.,][]{ragsdale2019models}.
 
 \begin{table}[t]
 \begin{footnotesize}
@@ -265,7 +266,7 @@ For non-human genomes we have have implemented two demographic histories for
 For \emph{D. melanogaster} we have implemented the three epoch model estimated from
 an African sample from \cite{sheehan2016deep} as well as the out-of-Africa divergence
 and associated bottleneck model of \cite{li2006inferring} which jointly models African
-and European populations. For For \emph{Arabidopsis thaliana}, we implemented the
+and European populations. For \emph{Arabidopsis thaliana}, we implemented the
 model from in \cite{durvasula2017african} inferred using \MSMC. This model includes
 a continuous change in population size over time, rather than pre-specified epochs of different
 population sizes.
@@ -284,13 +285,14 @@ We start by comparing popular methods for estimating
 population size histories ($N(t)$) of single populations and subsequently
 show simple examples of multi-population inference.
 To evaluate and compare the performance of inference methods we developed
-\texttt{snakemake} (\cite{koster2012snakemake}) workflows that allow reproducibility
+\texttt{snakemake} \citep{koster2012snakemake} workflows that allow reproducibility
 in comparing inference methods which are available from \url{https://github.com/popgensims/analysis}
 . The workflows allow efficient computing in multicore environments or on
 cluster environments.
 
-For single-population population size histories, we compared \MSMC, \smcpp, and
-\stairwayplot (\cite{schiffels2014inferring,terhorst2017robust,liu2015exploring})
+For single-population population size histories, we compared
+\MSMC~\citep{schiffels2014inferring}, \smcpp~\citep{terhorst2017robust}, and
+\stairwayplot~\citep{liu2015exploring}
  on simulated genomes sampled from a single population,
 in a number of the \stdpopsim models described above. The pipeline was generalized to
 run $R$ replicates with $C$ chromosomes for $N$ samples, for a total of $R \times C$
@@ -304,12 +306,12 @@ $N_e$ estimates from each program.
 
 \begin{figure}
 \begin{center}
-\includegraphics[width=0.8\linewidth]{display_items/homo_sapiens_mask_Ragsdale.png}
+\includegraphics[width=0.8\linewidth]{display_items/homo_sapiens_mask_Ragsdale.pdf}
 \caption{\textbf{Comparing estimates of $N(t)$ in humans}. Here we show estimates of population
 size over time ($N(t)$) inferred using 4 different methods, \smcpp, \texttt{stairwayplot},
 \MSMC with $n=2$ and $n=8$. Data were generated by simulating
-replicate human genomes under the \cite{ragsdale2019models} model and using the genetic map
-inferred in \cite{international2007second}. From top to bottom we show estimates for each
+replicate human genomes under the \cite{ragsdale2019models} model and using the
+HapMapII genetic map~\citep{international2007second}. From top to bottom we show estimates for each
 of the three populations in the model YRI, CEU, and CHB. In shades of blue we show the estimated
 $N(t)$ trajectories for each replicate. In black we show the true population size history as inferred
 for the rate of coalescence in the demographic model.}
@@ -318,9 +320,11 @@ for the rate of coalescence in the demographic model.}
 \end{figure}
 
 
+% JK here --- I think it would really help if we described what the models
+% were, briefly, rather than saying who inferred them.
 In Figure \ref{fig:n_t_ragsdale} we present results from our $N(t)$ analysis pipeline
-run on whole genome simulations under the \cite{ragsdale2019models} model using the
-human genetic map estimated from \cite{international2007second}. On rows
+run on whole genome simulations under a sophisticated demographic model
+and empirical genetic map. On rows
 we show inferred $N(t)$ for the three extant populations in the model.
 On columns we show comparisons among the methods (note that we compare two differing
 sample sizes for \MSMC). The solid black lines represent the true effective population
@@ -332,17 +336,25 @@ generally spoken the methods are accurate for this model of human history.
 \stdpopsim allows us to readily compare these estimates to those drawn from a different
 model of human history. In Figure \ref{fig:n_t_gutenkunst} we show estimates of
 $N(t)$ from simulations using the same physical and genetic maps, but a different demographic
-history-- that inferred by \cite{gutenkunst2009inferring}. Again we see that each
+history -- that inferred by \cite{gutenkunst2009inferring}. Again we see that each
 of the methods is capturing relevant parts of the population history, although the
 degree of noise at any given time interval varies. In comparing inferences between the
 models it is interesting to note that $N(t)$ estimates for the CHB and CEU
 simulated populations are generally better across methods than estimates from the YRI
 sample.
 
+We can even do away with the demographic model entirely, and simulate under a human
+genome architecture and genetic map to see how well methods might to at recovering
+the population history of a constant sized population. We show results of such an
+experiment in Figure \ref{fig:n_t_HomSap_constant}. Again we see that all methods
+are recovering a modern population size within a factor of two of the truth, however
+SMC-based methods, perhaps due to their regularization, tend to learn sinusoidal 
+patterns of population size even though no change is present. 
+
 
 \begin{figure}
 \begin{center}
-\includegraphics[width=0.8\linewidth]{display_items/d_mel_Sheehan_mask2.png}
+\includegraphics[width=0.8\linewidth]{display_items/d_mel_Sheehan_mask2.pdf}
 \caption{\textbf{Comparing estimates of $N(t)$ in \emph{Drosophila}}. Population
 size over time ($N(t)$) estimated from an African population sample. Data were generated by simulating
 replicate \emph{D.melanogaster} genomes under the three-epoch \cite{sheehan2016deep} model
@@ -356,7 +368,7 @@ for the rate of coalescence in the demographic model.}
 As most population genetic methods development has been focused on human-scale
 data, it is of consequence to ask how such methods might perform in non-human
 genomes. Figure \ref{fig:n_t_sheehan} shows parameter estimates from a demographic
-model estimated from an African sample of \emph{Drosophila melanogaster} (\cite{sheehan2016deep}).
+model estimated from an African sample of \emph{Drosophila melanogaster} \citep{sheehan2016deep}.
 As with humans, we use \stdpopsim to simulate replicate \emph{Drosophila} genomes under
 an empirically derived genetic map, and then try to infer back the parameters of model.
 Accuracy is mixed among methods in this setting, and generally worse than what we
@@ -449,54 +461,63 @@ and in turn, what are the models that the community is most interested in.
 
 We have shown in the results above how \stdpopsim can be used for direct comparisons
 of inferential methods on a common set of simulations. While we have not made a concerted
-effort at benchmarking methods yet, we believe that this would be an important effort for
+effort at benchmarking methods yet, we believe that this would be an important goal for
 the PopSim Consortium and population genetics more broadly. The analysis workflows that
 we have released as part of \stdpopsim should provide a cookbook for the community to
 dive in to more rigorous benchmarking than we have done thus far.
 
-Although we did not produce an exhaustive comparison of different demographic inference methods,
-our results are informative,
+In the use case comparisons we have performed,
+we found that the methods tested \emph{do} generally perform well on human genomes,
+up to, for instance, the usual factor-of-two differences in inferred population sizes.
+This will not be surprising to people familiar with the landscape of
+demographic inference methods in population genetics,
+but the nature and scale of uncertainty may be not clear to people new to the field.
+The ability for \stdpopsim to generate data with and without significant features, such
+as the genetic map or population size change (e.g., Figure \ref{fig:n_t_HomSap_constant}), allows
+us to ask directly about the various failure modes of popular methods. 
+Moreover the comparison of methods across the various genome organizations, genetic maps,
+and demographic histories of different organisms provides valuable information
+about how methods might perform on non-human systems.
+In our initial comparison we find that inference of population histories from \emph{Drosophila}
+or \emph{Arabidopsis} simulated genomes is a fair bit more difficult from SMC based methods
+than in the human genome. Likely this is consequence of the reduced physical and genetic
+map lengths of these genomes, although we will leave further investigation of this to the future.
+Finally, comparison of results across methods or simulation runs
+gives a strong estimate of inference uncertainty, analogously to parametric bootstrapping --
+although different methods have different strengths and weaknesses,
+strong conclusions should probably not rest entirely on features inferred by only one method.
+
+The broad brush comparisons we have done, while far from exhaustive, are informative,
 and highlight the utility of easy comparison of methods on the same footing.
 The tests here were under best-case scenarios --
 simulations of discrete, randomly mating populations that fit the assumptions of the methods nearly exactly --
 and yet different methods, as well as applications of the same method
 to different simulations of the same model,
 produced somewhat different results.
-We found that the methods tested \emph{do} generally perform well,
-up to, for instance, the usual factor-of-two differences in bottleneck population sizes.
-This will not be surprising to people familiar with the landscape of
-demographic inference methods in population genetics,
-but the nature and scale of uncertainty may be not clear to people new to the field.
-Comparison of results across methods or simulation runs
-gives a strong estimate of inference uncertainty, analogously to parametric bootstrapping --
-although different methods have different strengths and weaknesses,
-strong conclusions should probably not rest entirely on features inferred by only one method.
-
 
 %\adk{should we mention benchmarking of tree sequence inference here? what else?}
 
-
-\paragraph{The problem of comparison} % Moved from the intro
-Benchmarking the performance of inference methods in population genetics is not straightforward.
-Different methods often fit different types of model
-or use different summaries of the genetic variation data, even when
-attempting to address the same biological question. For example, there are
-numerous methods to infer population size changes.
-The \MSMC method \citep{schiffels2014inferring} allows for the
-population to continuously change in size over time. Other methods, such as
-\dadi \citep{gutenkunst2009inferring}, allow for a smaller number of size changes to occur at certain
-points throughout the population's history. The types of data that the
-methods use also differs. While \MSMC uses one to four whole genome sequences and leverages the
-spatial patterns of genetic variation along the sequence, \dadi  instead uses the
-site frequency spectrum (SFS), which summarizes the frequencies of SNPs in the
-sample, ignoring any information about the correlation structure (linkage
-disequilibrium) among SNPs. Thus from the start these methods may not be
-expected to perform equally well in all scenarios,
-and indeed, it is not always clear how to compare to the truth --
-for instance, how well can a method of piecewise constant population sizes
-describe a period of exponential growth?
-Or, how should discrete population models be mapped onto real-world (continuous) geography?
-The answer depends on determining what is most important for the question at hand.
+% \paragraph{The problem of comparison} % Moved from the intro
+% Benchmarking the performance of inference methods in population genetics is not straightforward.
+% Different methods often fit different types of model
+% or use different summaries of the genetic variation data, even when
+% attempting to address the same biological question. For example, there are
+% numerous methods to infer population size changes.
+% The \MSMC method \citep{schiffels2014inferring} allows for the
+% population to continuously change in size over time. Other methods, such as
+% \dadi \citep{gutenkunst2009inferring}, allow for a smaller number of size changes to occur at certain
+% points throughout the population's history. The types of data that the
+% methods use also differs. While \MSMC uses one to four whole genome sequences and leverages the
+% spatial patterns of genetic variation along the sequence, \dadi  instead uses the
+% site frequency spectrum (SFS), which summarizes the frequencies of SNPs in the
+% sample, ignoring any information about the correlation structure (linkage
+% disequilibrium) among SNPs. Thus from the start these methods may not be
+% expected to perform equally well in all scenarios,
+% and indeed, it is not always clear how to compare to the truth --
+% for instance, how well can a method of piecewise constant population sizes
+% describe a period of exponential growth?
+% Or, how should discrete population models be mapped onto real-world (continuous) geography?
+% The answer depends on determining what is most important for the question at hand.
 
 \section*{Methods}
 \subsection*{Generating the PopSim resource}
@@ -505,8 +526,8 @@ The answer depends on determining what is most important for the question at han
 As a consortium we have agreed to a standardized proceedure for model inclusion
 into \stdpopsim that allows for rigorous quality control. Imagine Developer A
 wants to introduce a new model into \stdpopsim. Developer A implements the
-demographic model for the relevant organism along with a series of required
-unit tests and documentation. This model is submitted as a Pull Request,
+demographic model for the relevant organism along with clear documentation
+of the model parameters and populations. This model is submitted as a Pull Request,
 where it is evaluated by a reviewer and then included as `preliminary',
 but is not linked to the online documentation nor the command line interface.
 Inclusion of a preliminary model triggers a QC issue, and a second developer,
@@ -524,39 +545,77 @@ to this point. Further details of our QC process can be found in our
 \href{https://stdpopsim.readthedocs.io/en/latest/development.html#}{developer documentation}.
 
 \subsection*{Workflow for analysis of simulated data}
-Snakemake pipeline for 1 pop models
+To demonstrate the utility of \stdpopsim we created \texttt{Snakemake}
+workflows \citep{koster2012snakemake} that perform demographic inference on
+tree sequence output from our package using a few common software packages. 
+Our choice of \texttt{Snakemake} allows complete reproducibility of the 
+analyses shown and the entire Analysis repository is available from
+\url{https://github.com/popgensims/analysis}. 
 
+We performed demographic analysis for one and two population tasks.
+Our one population task was to infer historical population size over
+time ($N(t)$). This was done using three software packages \stairwayplot
+which uses site frequency spectrum information only \citep{liu2015exploring},
+the SMC based \MSMC~\citep{schiffels2014inferring} which we ran with two different
+sample sizes $n\in (2 , 8)$, and \smcpp~\citep{terhorst2017robust} 
+which combines information from the site frequency spectrum with 
+recombination information as in SMC-based methods. No attempt
+was made at trying to optimize the analysis from
+any particular software package in present case,
+as our goal was not to benchmark performance of methods but
+instead show how such benchmarking could be easily done using
+the \stdpopsim resource. In this spirit we ran each software package as near
+to default parameters as possibile in each case. For \stairwayplot we
+set the parameters numRuns=1 and dimFactor=5000. For \smcpp we used the
+``estimate" run mode to infer $N(t)$ with all other parameters set
+to their default values. For \MSMC we used the ``--fixedRecombination"
+option and used the default number of iterations.
 
+For the single population task we ran human, HomSap, simulations
+using a variety of models: OutOfAfricaArchaicAdmixture\_5R19, OutOfAfrica\_3G09,
+a constant sized generic model, and a two epoch generic model where the
+population size instantaneously decreases from $N=10^4$ to $N=10^3$ 500 
+generations before the present. Each HomSap simulation was run
+using the HapmapII\_GRCh37 genetic maps. For \emph{D. melanogaster}
+we estimated $N(t)$ from an African sample simulated under the DroMel, 
+African3Epoch\_1S16 model using the Comeron2012\_dm6 map. Finally we ran
+simulations of \emph{A. thaliana} genomes using the AraTha African2Epoch\_1H18
+model under the Salome2012\_TAIR7. For each model, 3 replicate whole genomes were
+simulated and the population size estimated from those data. In all cases we
+set the sample size of the focal population to $N=50$ chromosomes. 
 
-\subsection*{Workflow for two population analysis}
+Following simulation, low recombination portions of chromosomes were masked
+from the analysis in a manner that reflects the ``accessible" subset of sites
+used in empirical population genomic studies \citep[e.g.,][]{danecek20111000,langley2012genomic}.
+Specifically we masked regions of 1cM or greater in the lowest 5th percentile of the empirical
+distribution of recombination, regions which are nearly uniformly absent for
+empirical analysis.  
+
 Our goal for the two population analysis pipeline was to explore two population inference
 on some of the multi-population demographic models implemented in \stdpopsim.
-The models we examined include the human Gutenkunst model (\cite{gutenkunst2009inferring}) as
-well as the \emph{Drosophila} Li and Stephan model (\cite{li2006inferring}). The human
-model is a three population model (Africa, Europe, and Asia) including post-divergence
+For HomSap we examined the OutOfAfrica\_3G09 model with the HapmapII\_GRCh37 genetic map,
+and for DroMel we simulated under the OutOfAfrica\_2L06 model with the Comeron2012\_dm6.
+The HomSap model is a three population model (Africa, Europe, and Asia) including post-divergence
 migration and exponential growth (Figure \ref{fig:IM_popn_human}C), whereas the
-\emph{Drosophila} model is a two population model (Africa and Europe) with no post-divergence
+DroMel model is a two population model (Africa and Europe) with no post-divergence
 migration and constant population sizes (Figure \ref{fig:two_popn_fly}).
 
-To conduct inference on these models, we implemented three commonly-used approaches:
-\dadi (\cite{gutenkunst2009inferring}), \fastsimcoal2 (\cite{excoffier2013robust}),
-and \smcpp (\cite{terhorst2017robust}). Our aim was not to exhaustively
-test the performance of these methods, but rather to explore their behavior
-in two different inference scenarios and demonstrate the potential for this resource to
-eventually be used for more in-depth benchmarking. As a result, these methods were used
+To conduct inference on these models, we used three commonly used methods:
+\dadi~\citep{gutenkunst2009inferring}, \fastsimcoal2~\citep{excoffier2013robust},
+and \smcpp~\citep{terhorst2017robust}. As above, these methods were used
 generally with default settings and we did not attempt to optimize their performance or fit
 parameter-rich demographic models. As with the single population inference pipeline,
-we developed a \texttt{snakemake} (\cite{koster2012snakemake}) workflow to manage
+we developed a \texttt{snakemake}~\citep{koster2012snakemake} workflow to manage
 our inference pipeline and maintain reproducibility.
 
-For both \dadi and \fastsimcoal2, our general approach was to fit a two population
+For both \dadi and \fastsimcoal2, we fit a two population
 isolation with migration (IM) model with constant population sizes to the simulated
-data from the human and \emph{Drosophila} models. This IM model contains six parameters:
+data from the HomSap and DroMel models. This IM model contains six parameters:
 the ancestral population size, the size of population 1 after the split, the size of
 population 2 after the split, the divergence time, and two migration rate parameters.
-Importantly, this meant that for both the human and \emph{Drosophila} inference, the
+Importantly, this meant that for both species, the
 fitted model did not match the simulated model (Figure \ref{fig:IM_popn_human}C and Sx).
-In the human case, we therefore performed inference solely on the Africa
+In the HomSap case, we therefore performed inference solely on the Africa
 and Europe populations, meaning that the Asia population functioned as a ghost
 population that was ignored by our inference. Our motivation for fitting this simple
 IM model was to mimic the typical approach of two population inference on empirical
@@ -564,17 +623,14 @@ data, where the user is not aware of the `true' underlying demography and the in
 model is often misspecified. To ground-truth our inference approach, we also conducted
 inference on a generic IM model that was identical to the model used for inference.
 
-To perform inference, we began by running simulations under each model, running
-three replicates to inspect for inter-replicate variability. For humans, we ran
-whole genome simulations (chromosomes 1-22) under the Gutenkunst model (\cite{gutenkunst2009inferring}),
-using the HapMap II recombination map (\cite{international2007second}) and taking 20
-samples each from the Europe and Africa populations. For \emph{Drosophila},
-we simulated 3 Mb of chromosome 2R under the Li and Stephan model (\cite{li2006inferring}),
-using the map inferred by \cite{comeron2012many} and taking 50 samples from each of
-the Africa and Europe populations. We tried to run whole genome simulations under
-this model but after XXXX amount of time... (JRA fill in details here). For the generic
-IM simulations, we used the human genome (chromosomes 1-22) and HapMap II recombination
-map (\cite{international2007second}) and took 20 samples per population.
+From HomSap we ran replicate whole genome simulations under the model
+and specified taking 20 samples each from the Europe and Africa populations. 
+For DroMel, runtimes under OutOfAfrica\_2L06 were prohibitively slow when simulating whole genomes.
+For example, both chromosomes 3R and X failed to coalesce within 30 days of starting using $n = 50$. 
+Runtimes using the identical sample size were 19, 21, and 12 days for chromosomes 2L, 2R, and 3L, 
+respectively. For this reason, we chose to present only data from chromosome 2R for simulations
+under OutOfAfrica\_2L06. For the generic IM simulations, we used the HomSap genome along with the 
+HapmapII\_GRCh37 genetic map, and sampled 20 individuals from each population.
 
 Following simulation, we outputted tree sequences and masked low recombination
 regions using the same approach described for the single population pipeline above. We
@@ -634,7 +690,7 @@ we focus on census size rather than the inverse coalescence rate as the `true' p
 \section*{Supplemental Figures}
 \begin{figure}
 \begin{center}
-\includegraphics[width=0.8\linewidth]{display_items/homo_sapiens_mask_Gutenkunst.png}
+\includegraphics[width=0.8\linewidth]{display_items/homo_sapiens_mask_Gutenkunst.pdf}
 \caption{\textbf{Comparing estimates of $N(t)$ in humans}. Here we show estimates of population
 size over time ($N(t)$) inferred using 4 different methods, \smcpp, \stairwayplot,
 \MSMC with $n=2$ and $n=8$. Data were generated by simulating
@@ -646,6 +702,20 @@ for the rate of coalescence in the demographic model.}
 \label{fig:n_t_gutenkunst}
 \end{center}
 \end{figure}
+
+\begin{figure}
+\begin{center}
+\includegraphics[width=0.8\linewidth]{display_items/homo_sapiens_constant.pdf}
+\caption{\textbf{Comparing estimates of $N(t)$ in humans}. Here we show estimates of population
+size over time ($N(t)$) inferred using 4 different methods, \smcpp, \texttt{stairwayplot},
+\MSMC with $n=2$ and $n=8$. Data were generated by simulating
+replicate human genomes under a constant sized population model with $N=10^4$ and using the
+HapMapII genetic map~\citep{international2007second}. In black we show the true population size history
+of the model.}
+\label{fig:n_t_HomSap_constant}
+\end{center}
+\end{figure}
+
 
 \begin{figure}
 \begin{center}
